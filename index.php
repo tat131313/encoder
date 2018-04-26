@@ -6,37 +6,18 @@
         $text_arr = str_split($text);                       //string -> array
         for($i = 0, $count = count($text_arr); $i < $count; $i++){
             for($j = 0, $jcount = count($letters); $j < $jcount; $j++){
-                if($j < $jcount - $k){
-                    while ($text_arr[$i] == $letters[$j]){
+                if ($text_arr[$i] == ' '){
+                    $encoderText[$i] = ' ';
+                } 
+                if ($text_arr[$i] == $letters[$j]){
+                    if($j < $jcount - $key){
                         $encoderText[$i] = $letters[$j + $key];
-                        var_dump($j);
-                        var_dump($text_arr[$j]);
-                        break;
                     }
-                }
-                else{
-                    $encoderText[$i] = 'a';
-                    var_dump($j);
-                    /*while ($text_arr[$i] == $letters[$j]){
-                        $encoderText[$i] = 'a';
-                        var_dump($j);
-                        var_dump($text_arr[$j]);
-                        break;
-                    }*/
-                }
-                
-                
-                /*while ($text_arr[$i] == $letters[$j]){
-                    if($j < $jcount - $k){
-                        $encoderText[$i] = $letters[$j + $key];
-                        //var_dump($j);
+                    elseif($j >= $jcount - $key){
+                        $new_key = $j + $key - $jcount;
+                        $encoderText[$i] = $letters[$new_key];
                     }
-                    elseif($j >= $jcount - $k){
-                        $encoderText[$i] = 'a';
-                    }
-                    else $encoderText[$i] = 'a';
-                    break;
-                } */ 
+                } 
             }    
         }
         return $encoderText;
@@ -47,7 +28,7 @@
     $encoderText = encoder($text, $key);
 
    // var_dump($encoderText);
-   // echo implode($encoderText);                             //array -> string
+    echo implode($encoderText);                             //array -> string
 
 
 ?>
