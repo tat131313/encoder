@@ -23,7 +23,7 @@
         return $encoderText;
     }   
 
-    $text = "abc xyz wsr";
+    $text = "London is a capital of Great Britain XyZ";
     $key = 3;                                               //offset
     $encoderText = encoder($text, $key);
 
