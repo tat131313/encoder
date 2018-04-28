@@ -60,12 +60,14 @@
         }
         return $encoder_wordText;
     }      
+    
+    include('view.php');
 
-    $text = 'London is a capital of Great Britain XyZ';
-    $key = 3;                                               //offset
-    $key_word = 'Tatiana';                                  //offset
-    $encoderText = encoder($text, $key);
-    $encoder_word = encoder_word($text, $key_word);
-    echo implode($encoderText)."<hr>";                             //array -> string
-    echo implode($encoder_word);                        //array -> string
+    // $text = 'London is a capital of Great Britain XyZ';
+    // $key = 3;                                               //offset
+    // $key_word = 'Tatiana';                                  //offset
+    // $encoderText = encoder($text, $key);
+    // $encoder_word = encoder_word($text, $key_word);
+    // echo implode($encoderText)."<hr>";                             //array -> string
+    // echo implode($encoder_word);                        //array -> string
 ?>
