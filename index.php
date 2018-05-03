@@ -23,7 +23,7 @@ $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'
         }
         return $encoderText;
     }
-    function encoder_word($text, $key){
+    function encoder_word($text, $key, $arg=1){
         global $letters;
         $key = strtolower($key);                  // text to lower  
         $key = str_split($key);                   //string -> array
@@ -52,7 +52,10 @@ $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'
             }
             else{
                 $m = $c % count($m_key2);
-                $x = $m_key1[$j] + $m_key2[$m];
+                $x = $m_key1[$j] + $m_key2[$m]*$arg;
+                if ($x < 0){
+                    $x = count($letters) + $x;
+                }
                 $x_m = $x % count($letters);
                 $encoder_wordText[$j] = $letters[$x_m];
                 $c++;
@@ -62,14 +65,12 @@ $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'
     }
     
     function decoder($text, $key){
-        
         $key = count($letters) - $key;
         return encoder($text,$key);
     }
 
     function decoder_word($text, $key){
-        $key = count($letters) - $key;
-        return encoder_word($text,$key);
+        return encoder_word($text,$key,-1);
     }
     
      if ($_POST['varKey'] == 'number'){
