@@ -23,17 +23,17 @@ $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'
         }
         return $encoderText;
     }
-    function encoder_word($text, $key_word){
+    function encoder_word($text, $key){
         global $letters;
-        $key_word = strtolower($key_word);                  // text to lower  
-        $key_word = str_split($key_word);                   //string -> array
+        $key = strtolower($key);                  // text to lower  
+        $key = str_split($key);                   //string -> array
 
         $text = strtolower($text);                          // text to lower                    
         $text_arr = str_split($text);                       //string -> array
 
-        for($m = 0, $mcount = count($key_word); $m < $mcount; $m++){ 
+        for($m = 0, $mcount = count($key); $m < $mcount; $m++){ 
             for($j = 0, $jcount = count($letters); $j < $jcount; $j++){
-                if ($key_word[$m] == $letters[$j]){
+                if ($key[$m] == $letters[$j]){
                     $m_key2[$m] = $j;                          //numbers array
                 }
             }
@@ -85,17 +85,17 @@ $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'
         return $decoder;
     }
 
-    function decoder_word($text, $key_word){
+    function decoder_word($text, $key){
         global $letters;
-        $key_word = strtolower($key_word);                  // text to lower  
-        $key_word = str_split($key_word);                   //string -> array
+        $key = strtolower($key);                  // text to lower  
+        $key = str_split($key);                   //string -> array
 
         $text = strtolower($text);                          // text to lower                    
         $text_arr = str_split($text);                       //string -> array
 
-        for($m = 0, $mcount = count($key_word); $m < $mcount; $m++){ 
+        for($m = 0, $mcount = count($key); $m < $mcount; $m++){ 
             for($j = 0, $jcount = count($letters); $j < $jcount; $j++){
-                if ($key_word[$m] == $letters[$j]){
+                if ($key[$m] == $letters[$j]){
                     $m_key2[$m] = $j;                          //numbers array
                 }
             }
@@ -126,20 +126,51 @@ $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'
         return $decoder_word;
     }
     
-    //include('view.php');
+     if ($_POST['varKey'] == 'number'){
+        if($_POST['text'] != '' && $_POST['key'] != ''){
+            $text = ($_POST['text']);
+            $key = ($_POST['key']);
+            $encoderText = encoder($text, $key);
+            $encoderText = implode($encoderText);
+        }
+    }
 
-     $text = 'London is a capital of Great Britain XyZ';
-     //$text = 'eogloa il a vipvttl hn geett uzigabn qgz';
+    if ($_POST['varKey'] == 'number'){
+        if($_POST['textD'] != '' && $_POST['keyD'] != ''){
+            $text = ($_POST['textD']);
+            $key = ($_POST['keyD']);
+            $encoderText = decoder($text, $key);
+            $encoderText = implode($encoderText);
+        }
+    }
 
-     $key = 3;                                               //offset
-     $key_word = 'Tatiana';                                  //offset
-     $encoderText = encoder($text, $key);
-     $encoder_word = encoder_word($text, $key_word);
-     $decoder = decoder($text, $key);
-     $decoder_word = decoder_word($text, $key_word);
+    if ($_POST['varKey'] == 'word'){
+        if($_POST['text'] != '' && $_POST['key'] != ''){
+            $text = ($_POST['text']);
+            $key = ($_POST['key']);
+            $encoderText = encoder_word($text, $key);
+            $encoderText = implode($encoderText);
+        }
+    }
 
-     echo implode($encoderText)."<hr>";                             //array -> string
-     echo implode($encoder_word)."<hr>";                            
-     echo implode($decoder)."<hr>";                                 
-     echo implode($decoder_word);  
+    if ($_POST['varKey'] == 'word'){
+        if($_POST['textD'] != '' && $_POST['keyD'] != ''){
+            $text = ($_POST['textD']);
+            $key = ($_POST['keyD']);
+            $encoderText = decoder_word($text, $key);
+            $encoderText = implode($encoderText);
+        }
+    }
+
+    function render ($template, $data =[])
+    { 
+        $path = $template . ".php";
+       
+        if (file_exists($path))
+        {
+            extract($data);
+            require($path);
+        }
+    }
+    render('forms', ["encoderText"=>"$encoderText", "text"=>"$text", "key"=>"$key"]);
 ?>
